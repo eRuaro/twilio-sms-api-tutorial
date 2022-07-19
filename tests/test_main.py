@@ -11,16 +11,11 @@ def test_read_main():
     assert response.json() == {"message": "Hello!"}
 
 def test_post_message_success():
-    toNumber = "00"
-    fromNumber = "01"
+    toNumber = "%2B639692956701"
+    fromNumber = "%2B19706388875"
     message = "Hello, from Twilio and Python!"
     response = client.post("/message/send?toNumber=" + toNumber + "&fromNumber=" + fromNumber + "&message=" + message)
     assert response.status_code == status.HTTP_201_CREATED
-    assert response.json() == {
-        "toNumber": toNumber,
-        "fromNumber": fromNumber, 
-        "message": message
-    }
 
 def test_post_message_missing_all_query_parameters():
     response = client.post("/message/send")
@@ -33,3 +28,9 @@ def test_post_message_missing_query_parameter():
 def test_post_message_missing_values_query_parameters():
     response = client.post("/message/send?toNumber=&fromNumber=&message=")
     assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert response.json() == {"detail": "Missing values for query parameters"}
+
+def test_post_message_missing_sign_from_number():
+    response = client.post("/message/send?toNumber=00&fromNumber=01&message=Hello, from Twilio and Python!")
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+    assert response.json() == {"detail": "Numbers must have a + sign in front"}
