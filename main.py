@@ -3,6 +3,9 @@ from fastapi import FastAPI, status, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from uvicorn import run
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = FastAPI()
 
@@ -32,8 +35,8 @@ async def post_message(toNumber: str, fromNumber: str, message: str):
     if (toNumber[0] != "+" or fromNumber[0] != "+"):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Numbers must have a + sign in front")
 
-    account_sid = os.environ["TWILIO_ACCOUNT_SID"]
-    auth_token = os.environ["TWILIO_AUTH_TOKEN"]
+    account_sid = os.getenv("TWILIO_ACCOUNT_SID")
+    auth_token = os.getenv("TWILIO_AUTH_TOKEN")
     client = Client(account_sid, auth_token)
 
     clientMessage = client.messages.create(
