@@ -37,6 +37,8 @@ async def post_message(toNumber: str, fromNumber: str, message: str):
 
     account_sid = os.getenv("TWILIO_ACCOUNT_SID", None)
     auth_token = os.getenv("TWILIO_AUTH_TOKEN", None)
+    print(account_sid)
+    print(auth_token)
 
     if (account_sid == None and auth_token == None):
         error_detail = "Missing values for TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN\n" + "SID: " + account_sid + "\n" + "Token: " + auth_token
