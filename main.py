@@ -35,10 +35,8 @@ async def post_message(toNumber: str, fromNumber: str, message: str):
     if (toNumber[0] != "+" or fromNumber[0] != "+"):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Numbers must have a + sign in front")
 
-    account_sid = os.getenv("TWILIO_ACCOUNT_SID", None)
-    auth_token = os.getenv("TWILIO_AUTH_TOKEN", None)
-    print(account_sid)
-    print(auth_token)
+    account_sid = os.getenv("TWILIO_ACCOUNT_SID")
+    auth_token = os.getenv("TWILIO_AUTH_TOKEN")
 
     if (account_sid == None and auth_token == None):
         error_detail = "Missing values for TWILIO_ACCOUNT_SID and TWILIO_AUTH_TOKEN\n" + "SID: " + account_sid + "\n" + "Token: " + auth_token
