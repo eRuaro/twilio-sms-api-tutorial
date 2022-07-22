@@ -13,9 +13,19 @@ def test_read_main():
 def test_post_message_success():
     toNumber = "%2B639692956701"
     fromNumber = "%2B19706388875"
+    toNumberExpected = "+639692956701"
+    fromNumberExpected = "+19706388875"
     message = "Hello, from Twilio and Python!"
+    messageBodyExpected = "Sent from your Twilio trial account - Hello, from Twilio and Python!"
+    
     response = client.post("/message/send?toNumber=" + toNumber + "&fromNumber=" + fromNumber + "&message=" + message)
     assert response.status_code == status.HTTP_201_CREATED
+    assert response.json() == {
+        "toNumber": toNumberExpected,
+        "fromNumber": fromNumberExpected,
+        "message": message,
+        "messageBody": messageBodyExpected,
+    }
 
 def test_post_message_missing_all_query_parameters():
     response = client.post("/message/send")
