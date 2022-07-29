@@ -11,10 +11,10 @@ def test_read_main():
     assert response.json() == {"message": "Hello!"}
 
 def test_post_message_success():
-    toNumber = "%2B639692956701"
-    fromNumber = "%2B19706388875"
-    toNumberExpected = "+639692956701"
-    fromNumberExpected = "+19706388875"
+    toNumber = "%2B" + "639692956701"
+    fromNumber = "%2B" + "19706388875"
+    toNumberExpected = "+" + "639692956701"
+    fromNumberExpected = "+" + "19706388875"
     message = "Hello, from Twilio and Python!"
     messageBodyExpected = "Sent from your Twilio trial account - Hello, from Twilio and Python!"
     
